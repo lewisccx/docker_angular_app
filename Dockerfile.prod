@@ -1,0 +1,18 @@
+FROM node:18-alpine as angular-build
+
+WORKDIR /app
+
+COPY package.json /app
+
+RUN npm install
+
+COPY . /app
+
+RUN npx ng build
+
+FROM nginx:1.23.0-alpine as nginx-runtime
+
+COPY --from=angular-build /app/dist/angular_app /usr/share/nginx/html
+
+# docker build -f Dockerfile.prod -t angular_image:prod .
+# docker run -p 8080:80 angular_image:prod

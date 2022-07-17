@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  angular_app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: angular_app_dev
+    volumes:
+      - ./src:/app/src:ro
+      - /app/node_modules
+    ports:
+      - 4200:4200
+    command: npx ng serve --host 0.0.0.0 --poll 2000 --disable-host-check
+# docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+# docker-compose -f docker-compose.yml -f docker-compose.dev.yml down -v
+# docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build

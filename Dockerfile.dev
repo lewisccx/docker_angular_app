@@ -1,0 +1,17 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package.json /app
+
+RUN npm install
+
+COPY . /app
+
+EXPOSE 4200
+
+CMD ["npx", "ng", "serve", "--host", "0.0.0.0", "--poll", "2000", "--disable-host-check"]
+
+#  docker build -f Dockerfile.dev -t angular_image:dev .
+
+# docker run --name angular_app -p 4200:4200 --rm -d -v %cd%\src:/app/src  -v /app/node_modules angular_image:dev
